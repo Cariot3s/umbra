@@ -1,0 +1,26 @@
+/* Nivel 7 — LUZ */
+
+body {
+    background-color: #f5f5f5;
+    color: #222;
+}
+
+.level-content {
+    margin-top: 30px;
+}
+
+/* Texto de ruido */
+.noise {
+    font-size: 0.95em;
+    color: #777;
+    line-height: 1.6;
+}
+
+/* Palabra clave */
+.key {
+    margin-top: 40px;
+    font-size: 0.9em;
+    color: #999;
+    letter-spacing: 2px;
+    text-transform: lowercase;
+}

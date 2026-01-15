@@ -1,0 +1,23 @@
+{
+  "lvl1": {
+    "answer": "silencio",
+    "next": "/pages/echo/index.html"
+  },
+
+  "lvl3": {
+    "answer": "umbranoperdona",
+    "next": "/pages/level4.html"
+  },
+
+  "lvl4": {
+    "answer": "eco",
+    "next": "/pages/nivel5.html"
+  },
+
+  "lvl8": {
+    "type": "login",
+    "user": "umbra",
+    "pass": "eco",
+    "next": "/pages/escucha/index.html"
+  }
+}

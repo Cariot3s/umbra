@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Nivel 5B</title>
+
+    <link rel="stylesheet" href="/core/css/variables.css">
+    <link rel="stylesheet" href="/core/css/base.css">
+
+    <style>
+        /* --- TEXTO OCULTO LOCAL --- */
+        .hidden-text {
+            margin-top: 120px;      /* separación respecto al texto visible */
+            color: transparent;    /* invisible real */
+            user-select: text;     /* seleccionable */
+        }
+
+        /* Opcional: visible solo al seleccionar */
+        .hidden-text::selection {
+            color: #1e1e1e;
+            background: transparent;
+        }
+    </style>
+
+    <script src="/core/js/state.js" defer></script>
+    <script defer>
+        document.addEventListener("DOMContentLoaded", () => {
+            UmbraState.updateLastPage("/pages/oscuridad.html");
+        });
+    </script>
+</head>
+<body>
+
+    <div class="level">
+        <div class="level-header">Nivel 5B</div>
+
+        <div class="level-content">
+            <p>
+                Esa ruta no es la correcta, pero casi aciertas!
+            </p>
+			
+			<p>
+                Busca bien en la página...
+            </p>
+			
+            <p class="hidden-text">
+                Quizás no es un eco.
+            </p>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Nivel 3</title>
+
+    <link rel="stylesheet" href="/core/css/variables.css">
+    <link rel="stylesheet" href="/core/css/base.css">
+</head>
+<body>
+
+<div class="level">
+    <div class="level-header">Nivel 3</div>
+
+    <div class="level-content">
+        <img
+            src="/core/images/VW1icmFOb1BlcmRvbmE=.png"
+            alt="BASE64"
+            title="BASE64"
+            style="max-width: 100%; margin-bottom: 20px;"
+        />
+    </div>
+
+    <div class="level-input">
+        <form id="answer-form" autocomplete="off">
+            <input
+                type="text"
+                id="answer"
+                autocomplete="off"
+                spellcheck="false"
+                required
+            />
+            <button type="submit">Enviar</button>
+        </form>
+
+        <p id="feedback" style="display:none; color:red; margin-top:10px;">
+            Respuesta incorrecta
+        </p>
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+    const form = document.getElementById("answer-form");
+    const input = document.getElementById("answer");
+    const feedback = document.getElementById("feedback");
+
+    form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        feedback.style.display = "none";
+
+        const answer = input.value.trim();
+        if (!answer) return;
+
+        try {
+            const res = await fetch("/api/validate", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    level: "lvl3",
+                    answer: answer
+                })
+            });
+
+            const data = await res.json();
+
+            if (data.ok && data.redirect) {
+                window.location.href = data.redirect;
+            } else {
+                feedback.style.display = "block";
+            }
+
+        } catch {
+            feedback.textContent = "Error de comunicación con el sistema.";
+            feedback.style.display = "block";
+        }
+    });
+});
+</script>
+
+</body>
+</html>

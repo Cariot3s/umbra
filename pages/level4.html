@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Nivel 4</title>
+
+    <link rel="stylesheet" href="/core/css/variables.css">
+    <link rel="stylesheet" href="/core/css/base.css">
+</head>
+<body>
+
+<div class="level">
+    <div class="level-header">Nivel 4</div>
+
+    <div class="level-content">
+        <p>
+            No escribas lo que ves.<br>
+            Escribe lo que ya ha sucedido.
+        </p>
+        <p>
+            Algunas cosas solo existen cuando regresan.
+        </p>
+
+        <form id="answer-form" autocomplete="off">
+            <input
+                type="text"
+                id="answer-input"
+                autocomplete="off"
+                required
+            >
+            <button type="submit">Enviar</button>
+        </form>
+
+        <p id="feedback" style="color:red; display:none; margin-top:10px;">
+            Respuesta incorrecta
+        </p>
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+    const form = document.getElementById("answer-form");
+    const input = document.getElementById("answer-input");
+    const feedback = document.getElementById("feedback");
+
+    form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        feedback.style.display = "none";
+
+        const answer = input.value.trim();
+        if (!answer) return;
+
+        try {
+            const res = await fetch("/api/validate", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    level: "lvl4",
+                    answer: answer
+                })
+            });
+
+            const data = await res.json();
+
+            if (data.ok && data.redirect) {
+                // Redirección solo con dato dinámico del servidor
+                window.location.href = data.redirect;
+            } else {
+                feedback.style.display = "block";
+            }
+
+        } catch (err) {
+            feedback.textContent = "Error de comunicación con el servidor.";
+            feedback.style.display = "block";
+        }
+    });
+});
+</script>
+
+</body>
+</html>

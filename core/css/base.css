@@ -1,0 +1,73 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: var(--font-main);
+}
+
+/* ---------- TÍTULOS ---------- */
+
+h1 {
+    font-weight: 300;
+    letter-spacing: 3px;
+    font-size: 2.4rem;
+}
+
+.level-header {
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+    opacity: 0.6;
+    margin-bottom: 40px;
+}
+
+/* ---------- CONTENEDOR DE NIVEL ---------- */
+
+.level {
+    width: 100%;
+    min-height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    padding-top: 60px;
+    text-align: center;
+}
+
+/* ---------- CONTENIDO ---------- */
+
+.level-content {
+    max-width: 700px;
+    line-height: 1.7;
+}
+
+/* ---------- TEXTO ---------- */
+
+p {
+    line-height: 1.7;
+}
+
+/* ---------- SEPARADOR INVISIBLE ---------- */
+
+.hidden-spacer {
+    height: 120px;        /* separación “prudente” */
+}
+
+/* ---------- TEXTO OCULTO REAL ---------- */
+
+.hidden-text {
+    color: transparent;
+    user-select: text;
+}
+
+.hidden-text::selection {
+    color: var(--text-color);
+    background: transparent;
+}

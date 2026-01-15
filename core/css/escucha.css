@@ -1,0 +1,48 @@
+.level-content {
+    margin-top: 60px;
+    text-align: center;
+}
+
+/* Botón Play */
+#play-btn {
+    font-size: 32px;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 2px solid #444;
+    background: transparent;
+    color: #444;
+    cursor: pointer;
+}
+
+#play-btn:hover {
+    background: #444;
+    color: #fff;
+}
+
+#play-btn:disabled {
+    opacity: 0.4;
+    cursor: default;
+}
+
+/* Botón Descargar */
+#download-btn {
+    display: block;              /* fuerza línea nueva */
+    margin: 25px auto 0 auto;    /* centrado + separación */
+    padding: 8px 24px;
+    border: 1px solid #444;
+    border-radius: 6px;
+    background: transparent;
+    color: #444;
+    cursor: pointer;
+}
+
+#download-btn:hover {
+    background: #444;
+    color: #fff;
+}
+
+/* Estado oculto — más específico */
+#download-btn.hidden {
+    display: none;
+}

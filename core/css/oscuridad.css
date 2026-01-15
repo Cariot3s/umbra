@@ -1,0 +1,21 @@
+/* Nivel 6 — OSCURIDAD */
+
+body {
+    background-color: #000;
+    color: #000;
+}
+
+/* Texto invisible hasta seleccionar */
+::selection {
+    background-color: #fff;
+    color: #000;
+}
+
+.level-content {
+    margin-top: 40px;
+}
+
+.hint {
+    margin-top: 40px;
+    font-size: 1.2em;
+}

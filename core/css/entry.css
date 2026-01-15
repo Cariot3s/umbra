@@ -1,0 +1,118 @@
+/* entry.css existente adaptado y extendido */
+
+.container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.intro {
+    margin-top: 30px;
+    font-size: 1.1rem;
+    opacity: 0.85;
+}
+
+.rules {
+    margin-top: 25px;
+    font-size: 0.95rem;
+    opacity: 0.7;
+}
+
+.warning {
+    margin-top: 40px;
+    font-size: 0.9rem;
+    opacity: 0.6;
+}
+
+.actions {
+    margin-top: 60px;
+    display: flex;
+    gap: 20px;
+}
+
+/* Botones generales */
+button {
+    background: transparent;
+    border: 1px solid var(--accent-color);
+    color: var(--text-color);
+    padding: 10px 24px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    letter-spacing: 1px;
+}
+
+button:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+/* ===================================================
+   LOGIN / REGISTRO
+   =================================================== */
+
+#login-form {
+    display: none; /* se mostrará dinámicamente */
+    flex-direction: column;
+    gap: 10px;
+    max-width: 300px;
+    margin-top: 30px;
+    width: 100%;
+}
+
+#login-form h2 {
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+}
+
+#login-form input {
+    padding: 8px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+#login-form button {
+    margin-top: 5px;
+    padding: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    border: 1px solid var(--accent-color);
+    background-color: transparent;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+#login-form button:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+#login-error {
+    color: red;
+    font-size: 0.85rem;
+    height: 18px; /* espacio reservado para no mover elementos */
+}
+
+#register-toggle {
+    text-align: center;
+    margin-top: 8px;
+    cursor: pointer;
+    color: var(--accent-color);
+    text-decoration: underline;
+    font-size: 0.9rem;
+}
+
+/* Ajustes de los botones de acciones para cuando el usuario está logueado */
+#actions {
+    display: none; /* se muestra solo si el usuario está logueado */
+    flex-direction: column;
+    gap: 10px;
+    max-width: 300px;
+    margin-top: 30px;
+    width: 100%;
+}
+
+#actions button {
+    width: 100%;
+}

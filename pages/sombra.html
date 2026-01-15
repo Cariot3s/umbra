@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Nivel 8</title>
+
+    <link rel="stylesheet" href="/core/css/variables.css">
+    <link rel="stylesheet" href="/core/css/base.css">
+    <link rel="stylesheet" href="/core/css/sombra.css">
+</head>
+<body>
+
+<div class="level">
+    <div class="level-header">Nivel 8</div>
+
+    <div class="level-content">
+
+        <!-- Imagen pista -->
+        <img src="/core/images/usuario_contrasena.png" alt="" class="hint-image"/>
+
+        <!-- Puerta CSS -->
+        <div class="door-frame">
+            <div class="door" id="door">
+                <div class="knob"></div>
+            </div>
+        </div>
+
+        <!-- Login flotante -->
+        <div id="login-box" class="hidden">
+            <input
+                type="text"
+                id="user"
+                placeholder="usuario"
+                autocomplete="off"
+            />
+            <input
+                type="password"
+                id="pass"
+                placeholder="contraseña"
+                autocomplete="off"
+            />
+            <button id="login-btn">Entrar</button>
+
+            <p id="login-error" style="color:red; display:none; margin-top:8px;">
+                Credenciales incorrectas
+            </p>
+        </div>
+
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+    const door = document.getElementById("door");
+    const loginBox = document.getElementById("login-box");
+    const loginBtn = document.getElementById("login-btn");
+    const errorMsg = document.getElementById("login-error");
+
+    // Abrir puerta y mostrar login
+    door.addEventListener("click", () => {
+        door.classList.add("open");
+        loginBox.classList.remove("hidden");
+    });
+
+    // Enviar login
+    loginBtn.addEventListener("click", async () => {
+        errorMsg.style.display = "none";
+
+        const user = document.getElementById("user").value.trim();
+        const pass = document.getElementById("pass").value.trim();
+
+        if (!user || !pass) return;
+
+        try {
+            const res = await fetch("/api/validate", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    level: "lvl8",
+                    user: user,
+                    pass: pass
+                })
+            });
+
+            const data = await res.json();
+
+            if (data.ok && data.redirect) {
+                window.location.href = data.redirect;
+            } else {
+                errorMsg.style.display = "block";
+            }
+
+        } catch (err) {
+            errorMsg.textContent = "Error de comunicación.";
+            errorMsg.style.display = "block";
+        }
+    });
+});
+</script>
+
+</body>
+</html>

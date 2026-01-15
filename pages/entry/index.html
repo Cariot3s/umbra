@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <title>UMBRA</title>
+
+    <link rel="stylesheet" href="/core/css/variables.css" />
+    <link rel="stylesheet" href="/core/css/base.css" />
+    <link rel="stylesheet" href="/core/css/entry.css" />
+
+    <script defer>
+        document.addEventListener("DOMContentLoaded", () => {
+
+            const loginForm = document.getElementById("login-form");
+            const actions = document.getElementById("actions");
+            const loginError = document.getElementById("login-error");
+            const registerToggle = document.getElementById("register-toggle");
+
+            const submitBtn = document.getElementById("submit-btn");
+
+            let isRegisterMode = false;
+
+            function showLogin() {
+                loginForm.style.display = "flex";
+                actions.style.display = "none";
+                updateFormMode();
+            }
+
+            function showActions() {
+                loginForm.style.display = "none";
+                actions.style.display = "flex";
+            }
+
+            function updateFormMode() {
+                submitBtn.textContent = isRegisterMode ? "Registrar" : "Entrar";
+                document.getElementById("form-title").textContent =
+                    isRegisterMode ? "Registro" : "Login";
+                registerToggle.textContent = isRegisterMode
+                    ? "¿Ya tienes cuenta? Inicia sesión"
+                    : "¿No tienes cuenta? Regístrate";
+
+                loginError.textContent = "";
+            }
+
+            registerToggle.onclick = () => {
+                isRegisterMode = !isRegisterMode;
+                updateFormMode();
+            };
+
+            loginForm.onsubmit = async (e) => {
+                e.preventDefault();
+                loginError.textContent = "";
+
+                const url = isRegisterMode ? "/register" : "/login";
+                const formData = new FormData(loginForm);
+
+                const res = await fetch(url, {
+                    method: "POST",
+                    body: formData
+                });
+
+                let data = null;
+                try { data = await res.json(); } catch {}
+
+                if (!res.ok || !data?.success) {
+                    loginError.textContent = "Credenciales incorrectas";
+                    return;
+                }
+
+                showActions();
+            };
+
+            // ▶️ COMENZAR PARTIDA (SIN RESET)
+            document.getElementById("start-btn").onclick = () => {
+                window.location.href = "/pages/silence/index.html";
+            };
+
+            // ⏩ CONTINUAR PARTIDA
+            document.getElementById("continue-btn").onclick = async () => {
+                const res = await fetch("/api/session_status");
+                const data = await res.json();
+
+                if (data.logged_in && data.last_page) {
+                    window.location.href = data.last_page;
+                } else {
+                    // fallback seguro
+                    window.location.href = "/pages/silence/index.html";
+                }
+            };
+
+            // Estado inicial
+            showLogin();
+
+            // Comprobar sesión existente
+            fetch("/api/session_status")
+                .then(r => r.json())
+                .then(data => {
+                    if (data.logged_in) showActions();
+                })
+                .catch(() => showLogin());
+        });
+    </script>
+</head>
+
+<body>
+<div class="container">
+    <h1>UMBRA</h1>
+
+    <p class="intro">
+        Esto no es un juego que se juega.<br>
+        Es un sistema que se explora.
+    </p>
+
+    <p class="rules">
+        No todo está a la vista.<br>
+        No todo es interactivo.<br>
+        No todo es lo que parece.
+    </p>
+
+    <p class="warning">
+        Lee.<br>
+        Observa.<br>
+        Cuestiona.
+    </p>
+
+    <form id="login-form">
+        <h2 id="form-title">Login</h2>
+        <input id="user" name="user" placeholder="usuario" required>
+        <input id="pass" name="pass" type="password" placeholder="contraseña" required>
+        <button id="submit-btn">Entrar</button>
+        <div id="login-error"></div>
+        <div id="register-toggle">¿No tienes cuenta? Regístrate</div>
+    </form>
+
+    <div id="actions" style="display:none; flex-direction: column; gap: 10px;">
+        <button id="start-btn">Comenzar partida</button>
+        <button id="continue-btn">Continuar partida</button>
+    </div>
+</div>
+</body>
+</html>
