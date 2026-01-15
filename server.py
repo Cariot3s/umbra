@@ -13,9 +13,9 @@ DATA_DIR = os.path.join(BASE_DIR, "data")
 PAGES_DIR = os.path.join(BASE_DIR, "pages")
 CORE_DIR = os.path.join(BASE_DIR, "core")
 
-USERS_FILE = os.path.join(DATA_DIR, "users.json")
+USERS_FILE    = os.path.join(DATA_DIR, "users.json")
 PROGRESS_FILE = os.path.join(DATA_DIR, "progress.json")
-LEVELS_FILE = os.path.join(DATA_DIR, "levels.json")
+LEVELS_FILE   = os.path.join(DATA_DIR, "levels.json")
 
 SECRET_KEY = "umbra-no-perdona"
 
@@ -67,12 +67,20 @@ def set_last_page(user, path):
     save_json(PROGRESS_FILE, progress)
 
 # =====================================================
-# ENTRY / LOGIN / REGISTRO
+# ENTRY (RUTA RAÍZ CORREGIDA)
 # =====================================================
 
 @app.route("/")
-def entry():
-    return send_from_directory(os.path.join(PAGES_DIR, "entry"), "index.html")
+def root():
+    # Punto de entrada oficial del juego
+    return send_from_directory(
+        os.path.join(PAGES_DIR, "entry"),
+        "index.html"
+    )
+
+# =====================================================
+# REGISTRO / LOGIN
+# =====================================================
 
 @app.route("/register", methods=["POST"])
 def register():
@@ -112,7 +120,7 @@ def logout():
     return redirect("/")
 
 # =====================================================
-# VALIDACIÓN DE NIVELES (ÚNICA LÓGICA DE PROGRESO)
+# VALIDACIÓN DE NIVELES
 # =====================================================
 
 @app.route("/api/validate", methods=["POST"])
@@ -126,33 +134,21 @@ def validate():
     if not rule:
         return jsonify(ok=False)
 
-    # ===============================
-    # INPUT SIMPLE
-    # ===============================
     if "answer" in rule:
         answer = data.get("answer", "").strip().lower()
         if answer != rule["answer"].lower():
             return jsonify(ok=False)
 
-    # ===============================
-    # LOGIN (USUARIO + CONTRASEÑA)
-    # ===============================
     if rule.get("type") == "login":
         u = data.get("user", "").lower().strip()
         p = data.get("pass", "").lower().strip()
         if u != rule["user"] or p != rule["pass"]:
             return jsonify(ok=False)
 
-    # ===============================
-    # MARCAR PROGRESO (INFORMATIVO)
-    # ===============================
     get_state(user)[level_id] = True
     save_json(PROGRESS_FILE, progress)
 
-    return jsonify(
-        ok=True,
-        redirect=rule["next"]
-    )
+    return jsonify(ok=True, redirect=rule["next"])
 
 # =====================================================
 # CONTINUAR PARTIDA
@@ -172,7 +168,7 @@ def session_status():
     )
 
 # =====================================================
-# SERVIR RECURSOS REALES
+# SERVIR RECURSOS
 # =====================================================
 
 @app.route("/pages/<path:filename>")
